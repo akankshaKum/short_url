@@ -25,10 +25,14 @@ public class ShortURLController {
     */
     @PutMapping("/shorten")
     public ResponseEntity< String> shortenUrl(@RequestBody Map<String, String> request) {
-        String destination = request.get("destination");
+        try {
+            String destination = request.get("destination");
             String shortcode = shortURLService.shortenUrl(destination);
             //String response = shortcode;
             return ResponseEntity.ok(shortcode);
+        } catch (Exception e){
+            return ResponseEntity.badRequest().body( "Invalid URL");
+        }
     }
 
 
